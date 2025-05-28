@@ -1,5 +1,5 @@
 # Credit-card-customer-segmentation-AI
-데이콘 해커톤- 갑상선암 진단 분류 코드
+데이콘 해커톤- 신용카드 고객 세그먼트 분류 AI
 
 
 ## Feature Importance분석.ipynb
