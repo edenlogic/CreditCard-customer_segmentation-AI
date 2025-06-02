@@ -2,6 +2,7 @@
 데이콘 해커톤- 신용카드 고객 세그먼트 분류 AI
 
 
+
 ## Feature Importance분석.ipynb
 
 1. 키워드 기반 Feature Importance 분석
@@ -17,11 +18,11 @@
 - show_next_30_features(model_all, all_columns)  # 실행 시 다음 상위 30개 추출
 
 
-## 신용카드_세그먼트_분류_1차제출
+## 신용카드_세그먼트_분류_1차제출.ipynb
 
 1. 데이터 구성
 - 입력 데이터: card_train.csv, card_test.csv
-
+  
 - 추천 피처: 총 50여 개 변수로 구성된 recommended_columns 기준 사용
 
 2. 전처리
@@ -42,7 +43,6 @@
 - 모델 하이퍼파라미터는 수동으로 튜닝 (e.g., n_estimators=300, max_depth=5 등)
 
 #### 평가 결과 (Validation)
-
 - Soft Voting 기준
   F1 Score (macro): 0.9372
   F1 Score (weighted): 0.9311
@@ -55,3 +55,54 @@
 #### 최종 제출 결과
 - 제출 파일: card_test_submission.csv
 - 리더보드 점수: 0.869840733634568
+
+
+
+## 신용카드_세그먼트_분류_2차제출.ipynb
+
+1. 데이터 구성
+- 입력 데이터: card_train.csv, card_test.csv
+
+- 추천 피처: 총 50여 개 변수로 구성된 recommended_columns 기준 사용
+
+2. 전처리
+- 범주형 처리: Object 타입 컬럼에 대해 Label Encoding 및 Frequency Encoding 적용
+
+- 결측 및 이상값 처리:
+  NaN, inf, -inf → 평균 대체 또는 0으로 변환
+
+- 파생 변수 생성:
+  카드 이용률, 체크카드 비율, 포인트 사용률, 연체 비율, 결제 규모, 불만 경과율 등 총 8개 파생 변수 추가
+
+3. 데이터 불균형 처리
+- SMOTE + RandomOverSampler 조합 사용
+
+- 클래스별 샘플 수 수동 지정 (예: 클래스 2 → 40000, 클래스 3 → 45000 등)
+
+- 최종 클래스 균등 분포 달성
+
+4. 모델 학습 및 앙상블
+XGBoost, LightGBM, CatBoost를 기반으로 Soft Voting 앙상블
+
+- 가중치 적용: LGB 0.5, XGB 0.3, CAT 0.2
+
+- 하이퍼파라미터 튜닝: n_estimators=300, max_depth=5, learning_rate=0.1 등
+
+#### 평가 결과 (Validation)
+- Soft Voting 기준
+  F1 Score (macro): 0.9414
+  F1 Score (weighted): 0.9355
+
+- Cross Validation 평균 (3-Fold 기준)
+  XGB: 0.9349
+  LGB: 0.9449
+  CAT: 0.9188
+
+#### 검증 데이터 클래스 분포 비교
+
+- 예측: [7000, 6000, 7995, 8816, 11490]
+- 정답: [7000, 6000, 8000, 9000, 11301] → 매우 유사
+
+#### 최종 제출 결과
+- 제출 파일: card_test_submission.csv
+- 리더보드 점수:
