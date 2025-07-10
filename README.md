@@ -93,7 +93,7 @@ XGBoost, LightGBM, CatBoost를 기반으로 Soft Voting 앙상블
   F1 Score (macro): 0.9414
   F1 Score (weighted): 0.9355
 
-- Cross Validation 평균 (3-Fold 기준)
+- Stratified K-Fold Cross-validation 평균 (3-Fold 기준)
   XGB: 0.9349
   LGB: 0.9449
   CAT: 0.9188
